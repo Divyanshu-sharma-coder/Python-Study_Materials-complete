@@ -1,0 +1,217 @@
+# ==========================================
+# 1. Operating System Files (Global Trash)
+# ==========================================
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.lnk
+*.cab
+desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.trash/
+.nfs*
+
+# ==========================================
+# 2. Editors and IDEs
+# ==========================================
+# VS Code
+.vscode/
+!.vscode/extensions.json
+!.vscode/launch.json
+!.vscode/settings.json
+!.vscode/tasks.json
+*.code-workspace
+
+# JetBrains (PyCharm, IntelliJ, WebStorm, etc.)
+.idea/
+*.iws
+*.iml
+*.ipr
+
+# Vim / Emacs
+.*.sw[a-z]
+*.un~
+Session.vim
+.netrwhist
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+elc/
+auto-save-list/
+tramp
+.\#*
+
+# Xcode / Eclipse
+.metadata/
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+.loadpath
+.project
+.cproject
+.classpath
+
+# ==========================================
+# 3. Environment Variables & Secrets (CRITICAL)
+# ==========================================
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.env
+*.secret
+*.pem
+*.key
+*.cert
+*.pfx
+credentials.json
+secrets.toml
+
+# ==========================================
+# 4. Programming Languages & Runtimes
+# ==========================================
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+.venv
+venv/
+ENV/
+env/
+pyvenv.cfg
+.pytest_cache/
+.tox/
+.coverage
+.cache
+htmlcov/
+
+# --- Node.js / JavaScript / TypeScript ---
+node_modules/
+jspm_packages/
+.npm
+.eslintcache
+.stylelintcache
+.next/
+.nuxt/
+.out/
+.docusaurus/
+dist/
+build/
+out/
+.yarn/
+!.yarn/releases/
+!.yarn/plugins/
+.yarn-metadata.dot
+yarn-error.log
+*.tsbuildinfo
+
+# --- Java / Kotlin ---
+*.class
+*.log
+*.ctxt
+.mtj.tmp/
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+# Build tools
+.gradle/
+build/
+!gradle-wrapper.jar
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.nextDevelopmentVersion
+release.properties
+
+# --- C / C++ ---
+*.o
+*.obj
+*.a
+*.lib
+*.so
+*.dylib
+*.dll
+*.exe
+*.out
+*.app
+# CMake
+CMakeCache.txt
+CMakeFiles/
+CMakeSettings.json
+cmake_install.cmake
+Makefile
+targets/
+
+# ==========================================
+# 5. Package Managers & Logs
+# ==========================================
+*.log
+logs/
+*.clgd
+*.statsd
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ==========================================
+# 6. Databases & Local Storage
+# ==========================================
+*.sqlite
+*.sqlite3
+*.db
+*.sql
+*.dump
+.data/
+data/
+# Redis / MongoDB / Docker local mounts
+.mongo/
+.redis/
+docker-volumes/
