@@ -1,0 +1,3 @@
+Hello this file is not existed but i use write method to create and write the content
+Hello this content is written using append method
+ heyy i am using with now so i dont need to close the file again and again
