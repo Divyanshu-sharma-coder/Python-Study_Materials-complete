@@ -101,10 +101,44 @@ npc1.info()
 npc2.info()
 npc3.info()
 
+print()
+print()
 
 
+print("----------------------------------------------- GETTERS & SETTERS ----------------------")
+# SO BASICALLY in our vice City class i put a new slot of currency where i stored total amount of money a user have 
+# but the issue is what if user stored -ive value like -100000 because we can modified it using npc1.currency = -10000 so we have to add a check a check that always checks first the value requirements and then modifies it and then a check that prints it
+# thats checks are called getters and setters getters shows output wheras setter set values 
+# @property, .setter keywords we use to do this
 
 
+class ViceCity3():
+    def __init__(self, currency):
+        self._currency = currency
+
+    @property  #Getter
+    def currency(self):
+        return self._currency
+    
+    @currency.setter #setter
+    def currency(self, value):
+        if(value < 0):
+            raise ValueError ("Currency cannot be Negative")
+            
+        self._currency = value
+
+
+      
+npc1 = ViceCity3(0)
+
+print(f"Total currency = {npc1.currency}")
+
+try:
+    npc1.currency = -8000
+except ValueError as e:
+    print(e)
+
+print(f"Total currency = {npc1.currency}")
 
 
 
