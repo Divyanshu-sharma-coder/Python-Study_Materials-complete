@@ -19,13 +19,14 @@ def SnakeWaterGun():
             print("invalid option -- ")
             
             
-        if(u == ["quit"]):
+        if(u == ["quit"] or u == ["exit"]):
           print("exiting")
           print(f"your total score is {total} and High Score is {high_score} and the computers score is {computer_score}")
           break
 
 
-        if((u == ["snake"] and c == ["snake"]) or (u == ["water"] and c == ["water"]) or (u == ["gun"] and c == ["gun"])):
+        # if((u == ["snake"] and c == ["snake"]) or (u == ["water"] and c == ["water"]) or (u == ["gun"] and c == ["gun"])):
+        if(u == c):
          print(f"Your choice {u}\n")
          print(f"Computer's choice {c}\n")
          print("--This is a Draw--")
@@ -37,7 +38,8 @@ def SnakeWaterGun():
          if(total >= high_score):
           high_score = total
     
-        elif((u == ["snake"] and c == ["gun"]) or (u == ["water"] and c == ["snake"]) or (u == ["gun"] and c == ["water"])):
+        # elif((u == ["snake"] and c == ["gun"]) or (u == ["water"] and c == ["snake"]) or (u == ["gun"] and c == ["water"])):
+        else:
          print(f"Your choice {u}\n")
          print(f"Computer's choice {c}\n")
          print("--You Loose--")
@@ -54,5 +56,25 @@ def SnakeWaterGun():
     total = 0
     
 SnakeWaterGun()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
