@@ -108,7 +108,7 @@ print()
 print("----------------------------------------------- GETTERS & SETTERS ----------------------")
 # SO BASICALLY in our vice City class i put a new slot of currency where i stored total amount of money a user have 
 # but the issue is what if user stored -ive value like -100000 because we can modified it using npc1.currency = -10000 so we have to add a check a check that always checks first the value requirements and then modifies it and then a check that prints it
-# thats checks are called getters and setters getters shows output wheras setter set values 
+# thats checks are called getters and setters, getters shows output wheras setter set values 
 # @property, .setter keywords we use to do this
 
 
@@ -143,15 +143,96 @@ print(f"Total currency = {npc1.currency}")
 
 
 
+print()
+
+print("               ---------------------------------INHERITENCE-------------------------------------------               ")
+
+# so basically if i have a class and i want another class with same property + adding more in it then i use inheritence
+# in which we have a Parent class then its code critiria then a child class with all details of parent class + extra 
+
+
+class parent():
+    def __init__(self, name, id, age):
+        self.name = name
+        self.id = id 
+        self.age = age
+
+    @property 
+    def age(self):
+            return self._age
+        
+    @age.setter
+    def age(self, value):
+            if(value < 0 or value > 100):
+                raise ValueError ("Invalid age !! ")
+            self._age = value
+
+    @property
+    def status(self):
+         return (f"NAME : {self.name}\nid : {self.id}\n AGE : {self._age}")
+ 
+
+# try:
+#     in_name = str(input("ENTER NAME -- "))
+#     in_id = int(input("ENTER ID -- "))
+#     in_age = int(input("ENTER AGE -- "))
+#     human1 = parent(in_name, in_id, in_age)
+#     print(human1.status)
+# except ValueError as e:
+#     print(f"\nERROR {e}")
+
+
+class child(parent):
+    def __init__(self, name, id, age, salary):
+        super().__init__(name, id, age)
+        self._salary = salary
+
+    @property
+    def salary(self):
+        return self._salary
+    
+    @salary.setter
+    def salary(self, value):
+        if(value < 0):
+            raise ValueError  ("Invalid Salary !!")
+        self._salary = value
+    @property
+    def show(self):
+         return (f"\nNAME : {self.name}\nID : {self.id}\n AGE : {self._age}\n SALARY : {self._salary}")
+    
+
+try:
+    in_name = str(input("ENTER NAME -- "))
+    in_id = int(input("ENTER ID -- "))
+    in_age = int(input("ENTER AGE -- "))
+    in_salary = int(input("ENter Salary -- "))
+    human2 = child(in_name, in_id, in_age, in_salary)
+    print(human2.show)
+except ValueError as e:
+    print(f"\nERROR {e}")
+
+
+        
 
 
 
+# A CATCH OF OOPS CLASSES AND OBJECTS
+# SO Basically when i make a class 
+class test():
+    pass
 
+a = test()
+a.age = 5
+print(a.age)
+# This will gives a ouput even i dont give attribue output so tp stop this we can just use __slot__ and fix class attributes like this
 
+class fix():
+    __slots__ = ("name", "age", "id")
 
-
-
-
+b= fix()
+b.salary = 50000
+print(b.salary)
+# Now this will throws and error.................
 
 
 
