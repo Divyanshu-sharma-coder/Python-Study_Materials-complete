@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infinity Castle: OOP Slayer Calculator</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Segoe+UI:wght@300;400;600&display=swap');
+
+        /* Infinity Castle Background Concept */
+        body {
+            background: linear-gradient(135px, rgba(18, 18, 20, 0.95), rgba(30, 20, 20, 0.97)),
+                        url('https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?q=80&w=1924&auto=format&fit=crop'); /* Aesthetic dark anime architecture backdrop */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Particle Overlay Canvas */
+        #effectCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .anime-title {
+            font-family: 'Permanent+Marker', 'Segoe UI', sans-serif;
+            text-shadow: 0 0 10px rgba(239, 68, 68, 0.7), 0 0 20px rgba(0, 0, 0, 0.8);
+            letter-spacing: 2px;
+        }
+
+        /* Base Calculator Container Styles */
+        .calculator-card {
+            background: rgba(30, 30, 36, 0.85);
+            backdrop-filter: blur(16px);
+            border: 2px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+            transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        /* Dynamic Aura Classes applied by JavaScript */
+        .aura-none { border-color: rgba(255,255,255,0.05); box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7); }
+        .aura-water { border-color: #3b82f6; box-shadow: 0 0 30px rgba(59, 130, 246, 0.6); }
+        .aura-flame { border-color: #ef4444; box-shadow: 0 0 30px rgba(239, 68, 68, 0.8); }
+        .aura-thunder { border-color: #eab308; box-shadow: 0 0 30px rgba(234, 179, 8, 0.8); }
+        .aura-beast { border-color: #14b8a6; box-shadow: 0 0 30px rgba(20, 184, 166, 0.6); }
+        .aura-love { border-color: #ec4899; box-shadow: 0 0 30px rgba(236, 72, 153, 0.6); }
+        .aura-demon { border-color: #a855f7; box-shadow: 0 0 30px rgba(168, 85, 247, 0.7); }
+
+        /* Smooth Screen layout */
+        .screen-container {
+            background-color: rgba(20, 20, 22, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+        }
+
+        /* Button ripple wave base layout */
+        .slaying-btn {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.1s ease;
+        }
+        .slaying-btn:active {
+            transform: scale(0.92);
+        }
+
+        /* Scrollbar aesthetics */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: rgba(20, 20, 22, 0.5); }
+        ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.2); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.4); }
+    </style>
+</head>
+<body class="flex items-center justify-center p-4 relative">
+
+<canvas id="effectCanvas"></canvas>
+
+<div class="w-full max-w-4xl z-20 flex flex-col items-center">
+    <h1 class="anime-title text-4xl text-red-500 font-bold mb-6 text-center uppercase">無限城 // Infinity Calculator</h1>
+    
+    <div class="flex gap-8 w-full flex-wrap justify-center items-start">
+        
+        <div id="calcContainer" class="calculator-card w-[380px] rounded-3xl p-6 aura-none">
+            <div class="screen-container w-full h-24 rounded-2xl mb-6 text-white text-right p-5 flex flex-col justify-center relative overflow-hidden">
+                <div id="display" class="text-4xl font-light tracking-wide truncate">0</div>
+                <div id="slayerTag" class="absolute bottom-2 left-4 text-xs font-bold uppercase tracking-widest text-gray-500 transition-all duration-300">Ready for Selection</div>
+            </div>
+
+            <div class="grid grid-cols-4 gap-3">
+                <button class="slaying-btn h-14 rounded-xl font-bold text-lg bg-gray-400 text-gray-900 shadow-md cursor-pointer hover:bg-gray-300" onclick="clearScreen()">C</button>
+                <button class="slaying-btn h-14 rounded-xl font-bold text-lg bg-slate-700 text-cyan-400 shadow-md cursor-pointer hover:bg-slate-600" onclick="appendUnaryOperator('sqrt')">√</button>
+                <button class="slaying-btn h-14 rounded-xl font-bold text-lg bg-slate-700 text-cyan-400 shadow-md cursor-pointer hover:bg-slate-600" onclick="appendUnaryOperator('log')">log</button>
+                <button class="slaying-btn h-14 rounded-xl font-bold text-xl bg-amber-500 text-white shadow-md cursor-pointer hover:bg-amber-400" onclick="appendOperator('/')">÷</button>
+
+                <button class="slaying-btn h-14 rounded-xl font-bold text-lg bg-slate-700 text-cyan-400 shadow-md cursor-pointer hover:bg-slate-600" onclick="appendOperator('%')">%</button>
+                <button class="slaying-btn h-14 rounded-xl font-bold text-lg bg-slate-700 text-cyan-400 shadow-md cursor-pointer hover:bg-slate-600" onclick="appendOperator('^')">xʸ</button>
+                <button class="slaying-btn h-14 rounded-xl font-bold text-lg bg-gray-400 text-gray-900 shadow-md cursor-pointer hover:bg-gray-300 flex items-center justify-center" onclick="backspace()">⌫</button>
+                <button class="slaying-btn h-14 rounded-xl font-bold text-xl bg-amber-500 text-white shadow-md cursor-pointer hover:bg-amber-400" onclick="appendOperator('*')">×</button>
+
+                <button class="slaying-btn h-14 rounded-xl font-bold text-xl bg-zinc-700/80 text-white shadow-md cursor-pointer hover:bg-zinc-600" onclick="appendNumber('7')">7</button>
+                <button class="slaying-btn h-14 rounded-xl font-bold text-xl bg-zinc-700/80 text-white shadow-md cursor-pointer hover:bg-zinc-600" onclick="appendNumber('8')">8</button>
+                <button class="slaying-btn h-14 rounded-xl font-bold text-xl bg-zinc-700/80 text-white shadow-md cursor-pointer hover:bg-zinc-600" onclick="appendNumber('9')">9</button>
+                <button class="slaying-btn h-14 rounded-xl font-bold text-xl bg-amber-500 text-white shadow-md cursor-pointer hover:bg-amber-400" onclick="appendOperator('-')">-</button>
+
+                <button class="slaying-btn h-14 rounded-xl font-bold text-xl bg-zinc-700/80 text-white shadow-md cursor-pointer hover:bg-zinc-600" onclick="appendNumber('4')">4</button>
+                <button class="slaying-btn h-14 rounded-xl font-bold text-xl bg-zinc-700/80 text-white shadow-md cursor-pointer hover:bg-zinc-600" onclick="appendNumber('5')">5</button>
+                <button class="slaying-btn h-14 rounded-xl font-bold text-xl bg-zinc-700/80 text-white shadow-md cursor-pointer hover:bg-zinc-600" onclick="appendNumber('6')">6</button>
+                <button class="slaying-btn h-14 rounded-xl font-bold text-xl bg-amber-500 text-white shadow-md cursor-pointer hover:bg-amber-400" onclick="appendOperator('+')">+</button>
+
+                <button class="slaying-btn h-14 rounded-xl font-bold text-xl bg-zinc-700/80 text-white shadow-md cursor-pointer hover:bg-zinc-600" onclick="appendNumber('1')">1</button>
+                <button class="slaying-btn h-14 rounded-xl font-bold text-xl bg-zinc-700/80 text-white shadow-md cursor-pointer hover:bg-zinc-600" onclick="appendNumber('2')">2</button>
+                <button class="slaying-btn h-14 rounded-xl font-bold text-xl bg-zinc-700/80 text-white shadow-md cursor-pointer hover:bg-zinc-600" onclick="appendNumber('3')">3</button>
+                <button class="slaying-btn h-14 col-span-2 row-span-2 h-auto rounded-xl font-bold text-xl bg-emerald-600 text-white shadow-md cursor-pointer hover:bg-emerald-500" onclick="compute()">=</button>
+
+                <button class="slaying-btn h-14 col-span-2 rounded-xl font-bold text-xl bg-zinc-700/80 text-white shadow-md cursor-pointer hover:bg-zinc-600" onclick="appendNumber('0')">0</button>
+                <button class="slaying-btn h-14 rounded-xl font-bold text-xl bg-zinc-700/80 text-white shadow-md cursor-pointer hover:bg-zinc-600" onclick="appendNumber('.')">.</button>
+            </div>
+        </div>
+
+        <div class="calculator-card w-[340px] rounded-3xl p-6 flex flex-col max-h-[465px]">
+            <div class="flex justify-between items-center mb-4 text-white">
+                <h3 class="text-md font-medium tracking-wider uppercase text-gray-400">⏳ Stream Logs</h3>
+                <button class="text-xs bg-rose-600 text-white px-3 py-1.5 rounded-md font-semibold hover:bg-rose-500 cursor-pointer shadow" onclick="clearHistoryLogs()">Wipe</button>
+            </div>
+            <div class="flex-grow overflow-y-auto space-y-3 pr-1" id="historyList">
+                </div>
+        </div>
+        
+    </div>
+</div>
+
+<script>
+    let currentInput = '0';
+    let operand1 = null;
+    let activeOperator = null;
+    let isUnaryFlag = false;
+    let shouldResetScreen = false;
+    const displayElement = document.getElementById('display');
+    const calcContainer = document.getElementById('calcContainer');
+    const slayerTag = document.getElementById('slayerTag');
+
+    // Canvas Configuration
+    const canvas = document.getElementById('effectCanvas');
+    const ctx = canvas.getContext('2d');
+    let dynamicParticles = [];
+
+    function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    // Mapping character properties, assets, and sticker text matching user sheet assets
+    const slayers = [
+        { name: "Tanjiro Kamado", style: "water", color: "#3b82f6", particle: "🌊", aura: "aura-water", text: "Water Surface Slash!" },
+        { name: "Kyojuro Rengoku", style: "flame", color: "#ef4444", particle: "🔥", aura: "aura-flame", text: "Set Your Heart Ablaze!" },
+        { name: "Zenitsu Agatsuma", style: "thunder", color: "#eab308", particle: "⚡", aura: "aura-thunder", text: "Thunder Flash!" },
+        { name: "Inosuke Hashibira", style: "beast", color: "#14b8a6", particle: "🐗", aura: "aura-beast", text: "Beast Breathing!" },
+        { name: "Mitsuri Kanroji", style: "love", color: "#ec4899", particle: "🌸", aura: "aura-love", text: "Love Breathing!" },
+        { name: "Muzan Kibutsuji", style: "demon", color: "#a855f7", particle: "🩸", aura: "aura-demon", text: "Blood Demon Art!" }
+    ];
+
+    // Particle Generation Engine
+    class Particle {
+        constructor(x, y, charData) {
+            this.x = x;
+            this.y = y;
+            this.charData = charData;
+            this.size = Math.random() * 24 + 16;
+            this.angle = Math.random() * Math.PI * 2;
+            this.speed = Math.random() * 6 + 4;
+            this.velocityX = Math.cos(this.angle) * this.speed;
+            this.velocityY = Math.sin(this.angle) * this.speed;
+            this.opacity = 1;
+            this.decay = Math.random() * 0.02 + 0.015;
+            this.rotation = Math.random() * 360;
+            this.rotationSpeed = Math.random() * 4 - 2;
+        }
+
+        update() {
+            this.x += this.velocityX;
+            this.y += this.velocityY;
+            // Add a little upward flow for fire/sparks contexts
+            if(this.charData.style === 'flame' || this.charData.style === 'thunder') {
+                this.velocityY -= 0.1; 
+            }
+            this.opacity -= this.decay;
+            this.rotation += this.rotationSpeed;
+        }
+
+        draw() {
+            ctx.save();
+            ctx.globalAlpha = this.opacity;
+            ctx.translate(this.x, this.y);
+            ctx.rotate((this.rotation * Math.PI) / 180);
+            ctx.font = `${this.size}px serif`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(this.charData.particle, 0, 0);
+            ctx.restore();
+        }
+    }
+
+    // Trigger breathing wave sequence & change design modes dynamically
+    function triggerSlayerBreathing(e) {
+        // Pick random character
+        const chosen = slayers[Math.floor(Math.random() * slayers.length)];
+        
+        // Update UI components dynamically
+        calcContainer.className = `calculator-card w-[380px] rounded-3xl p-6 ${chosen.aura}`;
+        slayerTag.innerText = `${chosen.name} : ${chosen.text}`;
+        slayerTag.style.color = chosen.color;
+
+        // Extract action coordinates
+        const rect = e.currentTarget.getBoundingClientRect();
+        const startX = rect.left + rect.width / 2 + window.scrollX;
+        const startY = rect.top + rect.height / 2 + window.scrollY;
+
+        // Spawn instances
+        for (let i = 0; i < 15; i++) {
+            dynamicParticles.push(new Particle(startX, startY, chosen));
+        }
+    }
+
+    // Continuous Canvas render loop
+    function animateParticles() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        for (let i = dynamicParticles.length - 1; i >= 0; i--) {
+            dynamicParticles[i].update();
+            if (dynamicParticles[i].opacity <= 0) {
+                dynamicParticles.splice(i, 1);
+            } else {
+                dynamicParticles[i].draw();
+            }
+        }
+        requestAnimationFrame(animateParticles);
+    }
+    animateParticles();
+
+    // --- Calculator Operation Handling Matrix ---
+    function updateDisplay() { displayElement.innerText = currentInput; }
+    
+    function clearScreen() { 
+        currentInput = '0'; operand1 = null; activeOperator = null; isUnaryFlag = false; updateDisplay(); 
+        calcContainer.className = "calculator-card w-[380px] rounded-3xl p-6 aura-none";
+        slayerTag.innerText = "Ready for Selection";
+        slayerTag.style.color = "#6b7280";
+    }
+    
+    function backspace() { currentInput = currentInput.length > 1 ? currentInput.slice(0, -1) : '0'; updateDisplay(); }
+
+    function appendNumber(num) {
+        // Trigger style wave dynamically on event frame loop
+        triggerSlayerBreathing(window.event);
+        if (currentInput === '0' || shouldResetScreen) { currentInput = num; shouldResetScreen = false; }
+        else { currentInput += num; }
+        updateDisplay();
+    }
+
+    function appendOperator(op) {
+        triggerSlayerBreathing(window.event);
+        if (activeOperator !== null && !shouldResetScreen) { compute(); }
+        operand1 = parseFloat(currentInput);
+        activeOperator = op;
+        isUnaryFlag = false;
+        shouldResetScreen = true;
+    }
+
+    function appendUnaryOperator(op) {
+        triggerSlayerBreathing(window.event);
+        operand1 = parseFloat(currentInput);
+        activeOperator = op;
+        isUnaryFlag = true;
+        compute();
+    }
+
+    async function compute() {
+        if (activeOperator === null) return;
+        
+        let payload = {};
+        if (isUnaryFlag) {
+            payload = { num1: operand1, operator: activeOperator };
+        } else {
+            if (shouldResetScreen) return;
+            let operand2 = parseFloat(currentInput);
+            payload = { num1: operand1, num2: operand2, operator: activeOperator };
+        }
+
+        const response = await fetch('/calculate', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+        
+        const data = await response.json();
+        if (data.success) { currentInput = data.result; activeOperator = null; } 
+        else { currentInput = data.error; }
+        
+        shouldResetScreen = true;
+        updateDisplay();
+        fetchHistory();
+    }
+
+    async function fetchHistory() {
+        const response = await fetch('/history');
+        const logs = await response.json();
+        const container = document.getElementById('historyList');
+        container.innerHTML = '';
+        
+        if(logs.length === 0) {
+            container.innerHTML = '<div class="text-zinc-500 text-sm text-center pt-8">No calculation logs available.</div>';
+            return;
+        }
+
+        logs.reverse().forEach(item => {
+            const div = document.createElement('div');
+            const borderClass = item.status === 'failed' ? 'border-rose-500' : 'border-emerald-500';
+            div.className = `p-3 bg-zinc-900/90 rounded-xl border-l-4 ${borderClass} shadow-inner transition-transform duration-200 hover:scale-[1.02]`;
+            div.innerHTML = `
+                <div class="text-xs text-zinc-400 font-mono">${item.expression}</div>
+                <div class="text-md text-white font-bold mt-0.5">${item.result}</div>
+            `;
+            container.appendChild(div);
+        });
+    }
+
+    async function clearHistoryLogs() {
+        await fetch('/history', { method: 'DELETE' });
+        fetchHistory();
+    }
+
+    // Startup Initialization
+    fetchHistory();
+</script>
+</body>
+</html>
