@@ -282,8 +282,37 @@ except ValueError as e:
 
 
 
+# Class Variable vs Instance Variabele
+print("----------------------------------Class Variable V/S Instance Variable------------------------------------")
+class company():
+    companyName = "Nvidia" # Class Variables
+    def __init__(self):
+        self.name = "Mike"
+        self.id = 1
+
+    @property
+    def showinfo(self):
+        print(f"Employee name {self.name} with id {self.id} is working on {self.companyName}")
+    
+try:
+    emp1 = company()
+    emp1.name = "Divyanshu"#Instance Variable
+    emp1.id = 2006#Instance Variable
+    emp1.showinfo
 
 
+    emp2 = company()
+    emp2.name = "Honey"
+    emp2.id = 2008
+    emp2.showinfo
+
+# Above code give same company name but what if i do this --
+    emp2.companyName = "Google DeepMind"
+    emp2.showinfo
+# Now you see Honey is now works on Google Deepmind and Divyanshu is still in Nvidia so its like class Variable is a Default value that you can change at Instance but if you don't this value stays default we use this in our above ViceCity class
+
+except ValueError as e:
+    print(f"\nERROR - {e}")
 
 
 
