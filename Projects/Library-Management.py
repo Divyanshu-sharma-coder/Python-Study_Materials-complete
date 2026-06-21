@@ -72,9 +72,9 @@ class Lib:
 my_library = Lib()
 
 while True:
-    print("\n========================")
+  
     user_start = input("Type 'add', 'show', 'count', or 'quit': ").strip().lower()
-    print("========================")
+    
 
     if user_start == "add":
         # Ask for the book name OUTSIDE the class

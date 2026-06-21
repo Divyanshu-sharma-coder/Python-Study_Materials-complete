@@ -182,34 +182,34 @@ class parent():
 #     print(f"\nERROR {e}")
 
 
-class child(parent):
-    def __init__(self, name, id, age, salary):
-        super().__init__(name, id, age)
-        self._salary = salary
+# class child(parent):
+#     def __init__(self, name, id, age, salary):
+#         super().__init__(name, id, age)
+#         self._salary = salary
 
-    @property
-    def salary(self):
-        return self._salary
+#     @property
+#     def salary(self):
+#         return self._salary
     
-    @salary.setter
-    def salary(self, value):
-        if(value < 0):
-            raise ValueError  ("Invalid Salary !!")
-        self._salary = value
-    @property
-    def show(self):
-         return (f"\nNAME : {self.name}\nID : {self.id}\n AGE : {self._age}\n SALARY : {self._salary}")
+#     @salary.setter
+#     def salary(self, value):
+#         if(value < 0):
+#             raise ValueError  ("Invalid Salary !!")
+#         self._salary = value
+#     @property
+#     def show(self):
+#          return (f"\nNAME : {self.name}\nID : {self.id}\n AGE : {self._age}\n SALARY : {self._salary}")
     
 
-try:
-    in_name = str(input("ENTER NAME -- "))
-    in_id = int(input("ENTER ID -- "))
-    in_age = int(input("ENTER AGE -- "))
-    in_salary = int(input("ENter Salary -- "))
-    human2 = child(in_name, in_id, in_age, in_salary)
-    print(human2.show)
-except ValueError as e:
-    print(f"\nERROR {e}")
+# try:
+#     in_name = str(input("ENTER NAME -- "))
+#     in_id = int(input("ENTER ID -- "))
+#     in_age = int(input("ENTER AGE -- "))
+#     in_salary = int(input("ENter Salary -- "))
+#     human2 = child(in_name, in_id, in_age, in_salary)
+#     print(human2.show)
+# except ValueError as e:
+#     print(f"\nERROR {e}")
 
 
         
@@ -230,9 +230,64 @@ class fix():
     __slots__ = ("name", "age", "id")
 
 b= fix()
-b.salary = 50000
-print(b.salary)
+# b.salary = 50000
 # Now this will throws and error.................
+ 
+
+
+print()
+print("---------------------------------- STATIC METHODS -----------------------------------------")
+# In class when we create any function even a constructor so we use a self keyword that pass the instance of that class as an argument in that function --
+# but what if i want to use just a fuction like add return(a+b) and i need to pass self in it also so when i call that fuction instance will also pass and interpreter got confused coz first it got 3 args and second like in instance we have a name variable then the inter preter confused how to add "miks" + 20+20 and got error
+# so thats why we use STATIC METHODS it gave us a self keyword less function 
+
+
+
+
+class childViceCity3(ViceCity3):
+    def __init__(self, currency, age):
+        super().__init__(currency)
+        self._age = age
+
+    @property
+    def age(self):
+        return self._age
+    
+    @age.setter
+    def name(self, value):
+        if(value < 0 or value > 100):
+            raise ValueError ("Please Enter Valid Age :- ")
+        self._age = value
+
+    @staticmethod
+    def square(a):
+        return a*a
+    
+    @property
+    def show(self):
+         return (f"AGE : {self._age}\n SALARY : {self._currency}\n")
+    
+try:
+  in_age = int(input("ENter Age :- "))
+  in_currency = int(input("Enter Currency :- "))
+  in_a = int(input("Enter a Number to square :- "))
+  one  = childViceCity3(in_age, in_currency)
+
+  print(one.show)
+  print(one.square(in_a))
+
+except ValueError as e:
+    print(f"\nERROR : {e}")
+
+
+
+
+
+
+
+
+
+
 
 
 
