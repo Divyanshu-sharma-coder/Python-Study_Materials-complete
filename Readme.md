@@ -22,7 +22,7 @@ Whether you are revising core concepts or looking through reference materials, t
 
 | Day | Module Topic | Core Concepts Covered |
 | :---: | :--- | :--- |
-| **Day 11** | [Strings in Python](#-day-11-strings-in-python) | Sequence declarations, Multiline syntax, Character index tracking |
+| **Day 14** | [Strings in Python](#-day-11-strings-in-python) | Sequence declarations, Multiline syntax, Character index tracking |
 | **Day 12** | [String Slicing & Operations](#-day-12-string-slicing--operations) | Substring syntax `[start:end]`, Slicing defaults, Negative indexing formulas |
 | **Day 13** | [String Native Methods](#-day-13-string-methods) | Immutability rules, Case mutation, Stripping, Search indices (`find` vs `index`) |
 | **Day 21** | [Function Arguments](#-day-21-function-arguments) | Default/Required logic, Keyword signatures, Variable-length vectors (`*args`, `**kwargs`) |
