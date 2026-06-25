@@ -214,11 +214,71 @@ p1 = player("GTA", "lmar", "M416")
 p1.info()
 print(player.__mro__)# Shows flow of the programm running-- which class run first and which goes second 
 
+print()
+
+print("--------------------------------Hybrid Inheritence & Hierarchiel Inheritence------------------------------------")
+
+# Basicalyy when we have inheritence with multiple types like single + any other inheritence or its formula is 
+# any  inheritence + any inheritence
+# for an ex. 
+
+class animal():   
+    def __init__(self):
+        pass
+class dog(animal):
+    def __init__(self): # this is a single inheritence
+     pass
+class hybrid(animal, dog): # this is a Multiple inheritece 
+    def __init__(self):
+     pass
 
 
+# jointy both are said to be a Hybrid Inheritence 
 
 
+# Heirarchiel Inheritence is like a heirarche for an ex. 
 
+class Dean():
+    def __init__(self):
+      pass
+
+class HOD_FCE(Dean):
+    def __init__(self):
+        pass
+
+class HOD_FET(Dean):
+    def __init__(self):
+        pass
+
+class T1(HOD_FCE):
+    def __init__(self):
+        pass
+
+class T2(HOD_FCE):
+    def __init__(self):
+        pass
+
+class T3(HOD_FET):
+    def __init__(self):
+        pass
+
+class T4(HOD_FET):
+    def __init__(self):
+        pass
+
+
+# Understand using this flowchart
+#                                       Dean
+#                                         |
+#                               ----------------------
+#                               |                     |
+#                             HOD_FCE               HOD_FET
+#                               |                     |
+#                         --------------        --------------
+#                         |             |       |             |
+#                         T1            T2      T3            T4
+
+# So this is a Heirarchy we use thats called a Heiracheiel Inheritence --
 
 
 
