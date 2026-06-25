@@ -186,8 +186,33 @@ class player(npc, npc_weapons, npc_vehical):
 
 p1 = player("Mike", "100%", "PP19-Bizon", "Pagani-Huyera", "Harley-Davidson", "Fighter-Jet(Raffel)")
 p1.info()
+print(player.__mro__)# Shows flow of the programm running-- which class run first and which goes second 
 
+
+print()
+print("----------------------------------MultiLevel Inheritence----------------------------------------")
+
+class gta():
+    def __init__(self, Class):
+        self.Class = Class
+
+class npc(gta):
+    def __init__(self, Class, name):
+        self.name = name
+        super().__init__(Class)
         
+class player(npc):
+    def __init__(self, Class, name, gun):
+        self.gun = gun
+        super().__init__(Class, name)    
+
+    def info(self):
+        print(f"so the Hierarchy is like that i have a class whose name is {self.Class} along with that that class goes to another class name npc in which i defined  variable name that is {self.name} then we make a new class player in which i inherit npc and in player i give gun to npc that is {self.gun} ")
+
+
+p1 = player("GTA", "lmar", "M416")
+p1.info()
+print(player.__mro__)# Shows flow of the programm running-- which class run first and which goes second 
 
 
 
