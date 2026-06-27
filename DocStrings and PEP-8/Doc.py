@@ -23,3 +23,4 @@ print(square.__doc__)
 
 # Output:
 # None
+

@@ -72,3 +72,32 @@ print("-" * 20)
 
 # New value (not cached)
 print(expensive_calculation(61))
+
+
+import sys
+
+# 1. Define the generator function
+def log_filter_generator(file_path, keyword):
+    """Yields lines from a file one-by-one only if they contain the keyword."""
+    with open(file_path, 'r', encoding='utf-8') as file:
+        for line in file:
+            if keyword in line:
+                # The yield keyword pauses the function and returns data one drop at a time
+                yield line.strip() 
+
+# 2. Use the generator in a program
+if __name__ == "__main__":
+    # Pretend server_logs.txt is a massive 10GB file
+    log_file = "server_logs.txt"
+    search_term = "ERROR"
+    
+    # Initialize the generator object (No data is read or stored yet!)
+    error_stream = log_filter_generator(log_file, search_term)
+    
+    print(f"Memory size of generator object: {sys.getsizeof(error_stream)} bytes\n")
+    print("Streaming matching logs:")
+    
+    # Loop over the generator to consume values lazily on-demand
+    for error_log in error_stream:
+        print(f"-> {error_log}")
+
